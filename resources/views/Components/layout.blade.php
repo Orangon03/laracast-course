@@ -21,6 +21,7 @@
               <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
               <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
               <x-nav-link href="/jobs" :active="request()->is('jobs')">Jobs</x-nav-link>
+              <x-nav-link href="/jobs/create" :active="request()->is('jobs/create')">CreateJobOffer</x-nav-link>
               <x-nav-link href="/contact" :active="request()->is('contact')" type="button">Contact</x-nav-link>
             </div>
           </div>
@@ -60,7 +61,7 @@
 
   <header class="relative bg-gray-800 after:pointer-events-none after:absolute after:inset-x-0 after:inset-y-0 after:border-y after:border-white/10">
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      <h1 class="text-3xl font-bold tracking-tight text-white">{{$heading}} {{$testing}}</h1>
+<h1 class="text-3xl font-bold tracking-tight text-white">{{$heading ?? ''}} {{ $testing ?? '' }}</h1>
     </div>
   </header>
   <main>
