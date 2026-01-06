@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class jobFactory extends Factory
 {
+
     /**
      * Define the model's default state.
      *
@@ -18,10 +19,15 @@ class jobFactory extends Factory
     public function definition(): array
     {
         return [
-            'title'=>fake()->title(),
+            'title' => fake()->jobTitle(),
             // 'salary'=>fake()->salary(),
-            'salary'=>'miliony$$$',
-            'employer_id'=>Employer::factory(),
+            'salary' => fake()->randomElement([
+                '$50,000',
+                '$90,000',
+                '$150,000',
+                '$180,000',
+            ]),
+            'employer_id' => Employer::factory(),
         ];
     }
 }
