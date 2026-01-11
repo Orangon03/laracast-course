@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\SessionController;
 use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Arr;
@@ -25,13 +27,13 @@ Route::view('/', 'home');
 // Route::delete("/jobs/{id}", [JobController::class, 'destroy']);
 
 Route::controller(JobController::class)->group(function () {
-    Route::get("/jobs", ['index']);
-    Route::get("/jobs/create", ['create']);
-    Route::get("/jobs/{job}", ['show']);
-    Route::post("/jobs", ['store']);
-    Route::get("/jobs/{id}/edit", ['edit']);
-    Route::patch("/jobs/{id}", ['update']);
-    Route::delete("/jobs/{id}", ['destroy']);
+    Route::get("/jobs", 'index');
+    Route::get("/jobs/create", 'create')->middleware('auth');
+    Route::get("/jobs/{job}", 'show');
+    Route::post("/jobs", 'store')->middleware('auth');
+    Route::get("/jobs/{job}/edit", 'edit')->middleware('auth')->can('edit', 'job');
+    Route::patch("/jobs/{id}", 'update')->middleware('auth');
+    Route::delete("/jobs/{id}", 'destroy')->middleware('auth');
 });
 
 // Route::get('/jobs', function () {
@@ -98,3 +100,11 @@ Route::controller(JobController::class)->group(function () {
 Route::get('/contact', function () {
     return view('contact');
 });
+
+Route::get('/register',[RegisteredUserController::class, 'create']);
+Route::post('/register',[RegisteredUserController::class, 'store']);
+
+
+Route::get('/login',[SessionController::class, 'create']);
+Route::post('/login',[SessionController::class, 'store']);
+Route::post('/logout',[SessionController::class, 'destroy']);
